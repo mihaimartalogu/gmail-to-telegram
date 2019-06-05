@@ -1,0 +1,5 @@
+node_modules/
+client_secret.json
+
+# secrets
+.env.yaml

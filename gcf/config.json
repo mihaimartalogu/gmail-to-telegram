@@ -1,0 +1,6 @@
+{
+  "GCF_REGION": "us-central1",
+  "GCLOUD_PROJECT": "gmail-to-telegram-forwarder",
+  "TOPIC_ID": "tgfw",
+  "FRONTEND_URL": "https://mihaimartalogu.github.io/gmail-to-telegram"
+}
