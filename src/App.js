@@ -45,7 +45,7 @@ function App() {
       }}
     >
       <Box>
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
           <AppBar position="static">
             <Toolbar>
               <Grid container>
