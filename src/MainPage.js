@@ -63,9 +63,6 @@ function MainPage({ setTitle }) {
       }
       getUpdates();
     }
-    // 674223707:AAEbv5ZFapRPcqbTNar_GQZz_pR95cBw7jw
-    // fetch("https://api.telegram.org/bot674223707:AAEbv5ZFapRPcqbTNar_GQZz_pR95cBw7jw/getUpdates
-    // )
   }, [botApiToken, shouldRetry]);
 
   return (
