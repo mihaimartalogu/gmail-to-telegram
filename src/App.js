@@ -20,12 +20,20 @@ import isEqual from "lodash/isEqual";
 
 import querystring from "query-string";
 // using ES6 modules
-import { HashRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link as NavLink
+} from "react-router-dom";
 
 import PrivacyPolicy from "./PrivacyPolicy";
 import Success from "./Success";
 import TitleContext from "./TitleContext";
 import MainPage, { mainPageTitle } from "./MainPage";
+
+const ForwardNavLink = React.forwardRef((props, ref) => (
+  <NavLink {...props} innerRef={ref} />
+));
 
 function App() {
   const [title, setTitle] = useState(mainPageTitle);
@@ -41,7 +49,7 @@ function App() {
           <AppBar position="static">
             <Toolbar>
               <Grid container>
-                <IconButton href="/">
+                <IconButton href="/" to="/" component={ForwardNavLink}>
                   <HomeIcon />
                 </IconButton>
                 <TitleContext.Consumer>
@@ -57,7 +65,12 @@ function App() {
                 </TitleContext.Consumer>
 
                 <Grid item xs />
-                <Button href="/privacy" color="inherit">
+                <Button
+                  href="/privacy"
+                  color="inherit"
+                  to="/privacy"
+                  component={ForwardNavLink}
+                >
                   Privacy Policy
                 </Button>
               </Grid>
