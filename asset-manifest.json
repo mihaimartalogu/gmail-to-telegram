@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/gmail-to-telegram/static/css/main.9a01b0d3.chunk.css",
+    "main.js": "/gmail-to-telegram/static/js/main.82d6b23d.chunk.js",
+    "main.js.map": "/gmail-to-telegram/static/js/main.82d6b23d.chunk.js.map",
+    "runtime~main.js": "/gmail-to-telegram/static/js/runtime~main.11c7458c.js",
+    "runtime~main.js.map": "/gmail-to-telegram/static/js/runtime~main.11c7458c.js.map",
+    "static/js/2.b4f65d19.chunk.js": "/gmail-to-telegram/static/js/2.b4f65d19.chunk.js",
+    "static/js/2.b4f65d19.chunk.js.map": "/gmail-to-telegram/static/js/2.b4f65d19.chunk.js.map",
+    "index.html": "/gmail-to-telegram/index.html",
+    "precache-manifest.ae6af831f7b1a180041df0635a3dbf70.js": "/gmail-to-telegram/precache-manifest.ae6af831f7b1a180041df0635a3dbf70.js",
+    "service-worker.js": "/gmail-to-telegram/service-worker.js",
+    "static/css/main.9a01b0d3.chunk.css.map": "/gmail-to-telegram/static/css/main.9a01b0d3.chunk.css.map"
+  }
+}
