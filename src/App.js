@@ -20,7 +20,7 @@ import isEqual from "lodash/isEqual";
 
 import querystring from "query-string";
 // using ES6 modules
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Route, Link } from "react-router-dom";
 
 import PrivacyPolicy from "./PrivacyPolicy";
 import Success from "./Success";
