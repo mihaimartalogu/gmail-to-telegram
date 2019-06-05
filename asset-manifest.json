@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/gmail-to-telegram/static/css/main.9a01b0d3.chunk.css",
-    "main.js": "/gmail-to-telegram/static/js/main.33e6a986.chunk.js",
-    "main.js.map": "/gmail-to-telegram/static/js/main.33e6a986.chunk.js.map",
+    "main.js": "/gmail-to-telegram/static/js/main.6f063cb9.chunk.js",
+    "main.js.map": "/gmail-to-telegram/static/js/main.6f063cb9.chunk.js.map",
     "runtime~main.js": "/gmail-to-telegram/static/js/runtime~main.11c7458c.js",
     "runtime~main.js.map": "/gmail-to-telegram/static/js/runtime~main.11c7458c.js.map",
-    "static/js/2.42b1c11d.chunk.js": "/gmail-to-telegram/static/js/2.42b1c11d.chunk.js",
-    "static/js/2.42b1c11d.chunk.js.map": "/gmail-to-telegram/static/js/2.42b1c11d.chunk.js.map",
+    "static/js/2.2a3d237e.chunk.js": "/gmail-to-telegram/static/js/2.2a3d237e.chunk.js",
+    "static/js/2.2a3d237e.chunk.js.map": "/gmail-to-telegram/static/js/2.2a3d237e.chunk.js.map",
     "index.html": "/gmail-to-telegram/index.html",
-    "precache-manifest.87e10e976ab12b9b9ee1850b270dacec.js": "/gmail-to-telegram/precache-manifest.87e10e976ab12b9b9ee1850b270dacec.js",
+    "precache-manifest.9c7b32e184a2973b8555a8a305c8a022.js": "/gmail-to-telegram/precache-manifest.9c7b32e184a2973b8555a8a305c8a022.js",
     "service-worker.js": "/gmail-to-telegram/service-worker.js",
     "static/css/main.9a01b0d3.chunk.css.map": "/gmail-to-telegram/static/css/main.9a01b0d3.chunk.css.map"
   }
