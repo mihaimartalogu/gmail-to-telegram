@@ -8,6 +8,7 @@ const fetch = require("node-fetch");
 const Datastore = require("@google-cloud/datastore");
 const path = require("path");
 const fs = require("fs");
+const flatten = require("lodash/flatten");
 
 const nconf = require(`nconf`);
 
@@ -165,38 +166,79 @@ exports.oauth2callback = async (req, res) => {
 };
 
 /**
+ * Reinitialize all watches that have a valid token
+ */
+exports.reinitWatches = async (req, res) => {
+  const query = datastore.createQuery("oauth2Token");
+  const [tokens] = await datastore.runQuery(query);
+  tokens.forEach(async token => {
+    const emailAddress = token[datastore.KEY].name;
+    const goodToken = await fetchToken(emailAddress); // fetchToken handles token refresh if needed
+    const { historyId } = await pify(gmail.users.watch)({
+      auth,
+      userId: "me",
+      resource: {
+        labelIds: ["INBOX"],
+        topicName: config.TOPIC_NAME
+      }
+    });
+    console.log("saving historyId: ", historyId);
+    await datastore.save({
+      key: datastore.key(["historyId", emailAddress]),
+      data: historyId
+    });
+  });
+  res.write(`Watches reinitialized: ${tokens.length}`);
+  res.status(200).end();
+};
+
+/**
  * Process new messages as they are received
  */
 exports.onNewMessage = async event => {
   // Parse the Pub/Sub message
   const dataStr = Buffer.from(event.data, "base64").toString("ascii");
   const dataObj = JSON.parse(dataStr);
+  const { emailAddress } = dataObj;
 
-  const token = await fetchToken(dataObj.emailAddress);
+  const token = await fetchToken(emailAddress);
 
-  const ids = (await pify(gmail.users.messages.list)({
+  // thanks datastore for the extra hoops needed for retrieving a number...
+  const startHistoryId = await datastore
+    .get(datastore.key(["historyId", emailAddress]))
+    .then(hIds => hIds[0])
+    .then(hIdObject =>
+      Object.keys(hIdObject)
+        .map(k => hIdObject[k])
+        .join("")
+    )
+    .then(hIdString => parseInt(hIdString));
+
+  console.log("startHistoryId: ", startHistoryId);
+  const { history, historyId } = await pify(gmail.users.history.list)({
     auth,
-    userId: "me"
-  })).messages.map(({ id }) => id);
-  let msgs = [];
-  for (let i = 0; i < ids.length; i++) {
-    const msg = await pify(gmail.users.messages.get)({
-      auth,
-      id: ids[i],
-      userId: "me"
-    });
-    msgs.push(msg);
-    if (msg.historyId < dataObj.historyId) {
-      break; // stop at the historyId received in the push message
-    }
-  }
+    userId: "me",
+    startHistoryId
+  });
+  console.log("historyResults:", history[0].messages, historyId);
+  const msgs = await Promise.all(
+    flatten(
+      history.map(h =>
+        h.messages.map(({ id }) =>
+          pify(gmail.users.messages.get)({
+            auth,
+            id,
+            userId: "me"
+          })
+        )
+      )
+    )
+  );
+  console.log(`Processing ${msgs.length} messages`);
 
-  msgs
-    .forEach(async msg => {
+  await Promise.all(
+    msgs.map(async msg => {
       const from = msg.payload.headers.find(h => h.name === "From").value;
-
-      console.log("from: ", from);
-      console.log("parts: ", JSON.stringify(msg.payload.parts));
 
       let bodyStr;
       if (msg.payload.parts) {
@@ -209,7 +251,6 @@ exports.onNewMessage = async event => {
           "ascii"
         );
       }
-      console.log("body: ", bodyStr);
 
       const [{ authorizedSender, tgGroup, tgAPIKey }] = await datastore.get(
         datastore.key(["telegramInfo", dataObj.emailAddress])
@@ -220,15 +261,18 @@ exports.onNewMessage = async event => {
         )}`;
         return fetch(url)
           .then(res => res.json())
-          .then(tgReply => {
-            console.log("tgReply:", tgReply);
+          .then(({ ok }) => {
+            if (!ok) {
+              throw Error(`Failed processing message id ${msg.id}`);
+            }
           });
       }
     })
-    .catch(err => {
-      // Handle unexpected errors
-      if (!err.message || err.message !== config.NO_LABEL_MATCH) {
-        console.error(err);
-      }
-    });
+  );
+  // successfully forwarded messages from history, store this historyId
+  await datastore.save({
+    key: datastore.key(["historyId", emailAddress]),
+    data: historyId
+  });
+  console.log("moved forward historyId to", historyId);
 };

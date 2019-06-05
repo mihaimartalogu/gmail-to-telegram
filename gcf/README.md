@@ -66,3 +66,12 @@ gcloud functions deploy oauth2callback --runtime nodejs8 --trigger-http --env-va
 gcloud functions deploy onNewMessage --runtime nodejs8 --trigger-topic tgfw
 ```
 
+
+
+## Set up a Cloud Scheduler to reinit watches every day
+(as recommended by the docs: )
+I set it up at 00:37 every day:
+```
+37 0 * * *
+```
+It will GET the `...cloudfunctions.net/reinitWatches` cloud function.

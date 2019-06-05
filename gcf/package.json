@@ -22,10 +22,11 @@
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
     "googleapis": "^23.0.0",
+    "lodash": "^4.17.11",
     "nconf": "^0.10.0",
+    "node-fetch": "^2.6.0",
     "pify": "^3.0.0",
-    "supertest": "^3.0.0",
-    "node-fetch": "^2.6.0"
+    "supertest": "^3.0.0"
   },
   "devDependencies": {
     "@google-cloud/nodejs-repo-tools": "2.1.3",
