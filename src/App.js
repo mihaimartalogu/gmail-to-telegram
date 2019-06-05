@@ -28,6 +28,7 @@ import {
 
 import PrivacyPolicy from "./PrivacyPolicy";
 import Success from "./Success";
+import ErrorPage from "./ErrorPage";
 import TitleContext from "./TitleContext";
 import MainPage, { mainPageTitle } from "./MainPage";
 
@@ -86,6 +87,7 @@ function App() {
             <Box style={{ gridColumnEnd: "span 1" }}>
               <Route path="/" exact component={MainPage} />
               <Route path="/success" exact component={Success} />
+              <Route path="/error" exact component={ErrorPage} />
               <Route path="/privacy" exact component={PrivacyPolicy} />
             </Box>
             <Box style={{ gridColumnEnd: "span 1" }} />

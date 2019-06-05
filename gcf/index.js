@@ -160,7 +160,7 @@ exports.oauth2callback = async (req, res) => {
     );
   } catch (err) {
     console.error(err);
-    res.redirect(`${config.FRONTEND_URL}/error`);
+    res.redirect(`${config.FRONTEND_URL}/error?err=${querystring.escape(err)}`);
   }
 };
 
