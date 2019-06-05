@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/gmail-to-telegram/precache-manifest.9c7b32e184a2973b8555a8a305c8a022.js"
+  "/gmail-to-telegram/precache-manifest.7b720813b87d758bf9ac22ac64f6a1da.js"
 );
 
 self.addEventListener('message', (event) => {
